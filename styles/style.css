@@ -1,15 +1,12 @@
-/* 1) Hero-section bloqué à 1966×720 mais responsive */
 .hero-section {
-    position: relative;
-    width: 1966px;
-    max-width: 100%;
-    height: 720px;
-    margin: 0 auto;
+    width: 100%;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
-    background: #000;  /* au cas où la vidéo n’atteint pas les bords */
+    background: #000;
+    position: relative;
 }
 
-/* 2) Conteneur vidéo */
+
 .video-container {
     position: absolute;
     top: 0;
@@ -20,23 +17,20 @@
     overflow: hidden;
 }
 
-/* 3) Vidéo en full cover sans calculs compliqués */
-.video-container video .video-background {
+.video-background {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;       /* force la largeur à remplir le conteneur */
-    height: 100%;      /* force la hauteur à remplir le conteneur */
-    object-fit: cover; /* recadre automatiquement en Crop */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: center center;
 }
-
-/* 4) Overlay / Texte inchangés */
 .hero-content {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    z-index: 2;
+    z-index: 2; /* Doit être plus grand que la vidéo */
     background: rgba(0,0,0,0.3);
     display: flex;
     align-items: center;
@@ -44,6 +38,7 @@
     padding: 0 10%;
     text-align: left;
 }
+
 
 /* 5) Responsive large écrans (<1966px) */
 @media (max-width: 1966px) {

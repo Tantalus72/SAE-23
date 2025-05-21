@@ -15,11 +15,11 @@ require_once 'functions/functions.php';
 
     <header class="hero-section">
         <div class="video-container">
-            <div id="videoCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-inner">
+            <div id="videoCarousel" class="carousel slide carousel-fade w-100 h-100" data-bs-ride="carousel">
+                <div class="carousel-inner w-100 h-100">
                     <?php foreach(glob('ressources/videos/*.mp4') as $key => $video) { ?>
-                    <div class="carousel-item <?= $key === 0 ? 'active' : '' ?>">
-                        <video class="video-background" autoplay muted loop>
+                    <div class="carousel-item w-100 h-100 <?= $key === 0 ? 'active' : '' ?>">
+                        <video class="video-background w-100 h-100" autoplay muted loop>
                             <source src="<?= $video ?>" type="video/mp4">
                         </video>
                     </div>
