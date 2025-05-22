@@ -37,10 +37,10 @@ require_once 'functions/functions.php';
                                 <?php if(isset($_SESSION['email'])) { ?>
                                     Bienvenue <br><span class="text-primary"><?= htmlspecialchars($_SESSION['email']) ?></span>
                                 <?php } else { ?>
-                                    Trouvez la voiture<br><span class="text-primary">de vos rêves</span>
+                                    Trouvez votre voiture<br><span class="text-primary">de vos rêves</span>
                                 <?php }; ?>
                             </h1>
-                            <p class="lead mb-5 text-white-75 text-white">Découvrez notre collection exclusive</p>
+                            <p class="lead mb-5 text-white-75 text-white">Découvrez notre incroyable collection</p>
                             <a href="annonces.php" class="btn btn-light btn-lg px-5 me-3">Explorer</a>
                             <?php if(!isset($_SESSION['email'])) { ?>
                                 <a href="login.php" class="btn btn-outline-light btn-lg px-5">Connexion</a>
