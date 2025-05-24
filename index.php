@@ -1,6 +1,11 @@
 <?php
 session_start();
 require_once 'functions/functions.php';
+if (!isset($_SESSION['email'])) {
+    header('Location: connexion.php');
+    exit();
+}
+
 ?>
 <html lang="fr">
 <head>
@@ -11,7 +16,35 @@ require_once 'functions/functions.php';
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php">
+            <img src="ressources/image/TROUVETACAISSELOGO.png" alt="Logo" class="img-fluid">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="index.php">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="annonces.php">Annonces</a></li>
+                <li class="nav-item"><a class="nav-link" href="rechercher.php">Rechercher</a></li>
+                <?php if(isAdmin($_SESSION['email'] ?? '')) { ?>
+                <li class="nav-item"><a class="nav-link" href="insertion.php">Insertion</a></li>
+                <li class="nav-item"><a class="nav-link" href="suppression.php">Suppression</a></li>
+                <?php }; ?>
+            </ul>
+            <ul class="navbar-nav">
+            
+                <li class="nav-item"><a class="nav-link" href="logout.php">Déconnexion</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <header class="hero-section">
         <div class="video-container">
@@ -34,11 +67,8 @@ require_once 'functions/functions.php';
                     <div class="col-lg-7 col-xl-6">
                         <div class="welcome-text">
                             <h1 class="display-3 fw-bold mb-4 text-white">
-                                <?php if(isset($_SESSION['email'])) { ?>
-                                    Bienvenue <br><span class="text-primary"><?= htmlspecialchars($_SESSION['email']) ?></span>
-                                <?php } else { ?>
-                                    Trouvez votre voiture<br><span class="text-primary">de vos rêves</span>
-                                <?php }; ?>
+                                
+                                    Bienvenue <br><span class="text-primary"><?= htmlspecialchars($_SESSION['email'])?> </span>
                             </h1>
                             <p class="lead mb-5 text-white-75 text-white">Découvrez notre incroyable collection</p>
                             <a href="annonces.php" class="btn btn-light btn-lg px-5 me-3">Explorer</a>
@@ -87,7 +117,28 @@ require_once 'functions/functions.php';
         </div>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <footer class="bg-dark text-white mt-5">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>À propos</h5>
+                <p>Site d'annonces de voitures d'occasion - Projet PHP <br>
+                    Réalisé par GIRAULT Erwann et SENES Tiziano</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Contact</h5>
+                <ul class="list-unstyled">
+                    <li>Email : contact@auto-annonces.com</li>
+                    <li>Tél : 01 23 45 67 89</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <p>&copy; 2025 Auto-Annonces - Tous droits réservés</p>
+        </div>
+    </div>
+</footer>';
+
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>

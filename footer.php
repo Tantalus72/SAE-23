@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-md-6">
                 <h5>À propos</h5>
-                <p class="text-muted">Site d\'annonces de voitures d\'occasion - Projet PHP</p>
+                <p>Site d'annonces de voitures d'occasion - Projet PHP <br>
+                    Réalisé par GIRAULT Erwann et SENES Tiziano</p>
             </div>
             <div class="col-md-6">
                 <h5>Contact</h5>
