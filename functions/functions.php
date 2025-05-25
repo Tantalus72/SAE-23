@@ -67,4 +67,27 @@ function listerAnnonces()	{
     return $retour;
 }	
 
+
+
+// Fonction de suppression d'une annonce
+function delete_annonce($id) {
+    try {
+        $pdo = getPDO();
+        $stmt = $pdo->prepare("DELETE FROM annonces WHERE idAnnonce = ?");
+        return $stmt->execute([$id]);
+    } catch (PDOException $e) {
+        error_log("Erreur suppression: " . $e->getMessage());
+        return false;
+    }
+}
+
+// Fonction de connexion PDO (si non existante)
+function getPDO() {
+    try {
+        return new PDO('sqlite:bdd/db.sqlite');
+    } catch (PDOException $e) {
+        die("Erreur connexion BDD: " . $e->getMessage());
+    }
+}
+
 ?>
