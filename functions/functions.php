@@ -44,28 +44,25 @@ function isAdmin($mail){
 function listerAnnonces()	{
     $retour = false;
     try {
+        $pdo = new PDO('sqlite:bdd/db.sqlite');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        // Création Objet PDO (@param->chaine de co bdd)
-        $madb = new PDO('sqlite:bdd/db.sqlite');
+        $sql = "SELECT 
+                    a.*, 
+                    m.nom as nom_marque, 
+                    mo.nom as nom_modele 
+                FROM annonces a
+                JOIN marques m ON a.idMarque = m.idMarque
+                JOIN modeles mo ON a.idModele = mo.idModele
+                ORDER BY a.idAnnonce DESC";
 
-        // Ecriture de la req
-        $sql = "SELECT * FROM annonces";
-
-        // Execution de la req
-        $res = $madb -> query($sql);
+        $stmt = $pdo->query($sql);
+        $retour = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        // Récupération de la réponse sous forme de tablea
-        $tab_assoc = $res->fetchAll(PDO::FETCH_ASSOC);
-        // Traitement des info s'il y en a
-
-        if (sizeof($tab_assoc) != 0) {
-            $retour = $tab_assoc;
-        } 
-
-    }// fin try
-    catch (Exception $e) {		
-        echo "Erreur BDD" . $e->getMessage();		
-    }	// fin catch
+    } catch (PDOException $e) {
+        error_log("Erreur BDD: " . $e->getMessage());
+        $retour = false;
+    }
     
     return $retour;
 }	

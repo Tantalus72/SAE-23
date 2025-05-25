@@ -68,7 +68,7 @@ if (!isset($_SESSION['email'])) {
                         <div class="welcome-text">
                             <h1 class="display-3 fw-bold mb-4 text-white">
                                 
-                                    Bienvenue <br><span class="text-primary"><?= htmlspecialchars($_SESSION['email'])?> </span>
+                                    Bienvenue <br><span class="text-primary"><?= $_SESSION['email']?> </span>
                             </h1>
                             <p class="lead mb-5 text-white-75 text-white">Découvrez notre incroyable collection</p>
                             <a href="annonces.php" class="btn btn-light btn-lg px-5 me-3">Explorer</a>
@@ -91,19 +91,33 @@ if (!isset($_SESSION['email'])) {
             $annonces = listerAnnonces();
             $count = 0;
             
-            if($annonces !== false) {
+            if($annonces !== []) {
                 foreach($annonces as $annonce) {
                     if($count++ >= 5) break;
             ?>
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Voiture">
+                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Voiture d'occasion">
                     <div class="card-body">
-                        <h5 class="card-title"><?= $annonce['titre'] ?></h5>
-                        <p class="card-text"><?= substr($annonce['description'], 0, 100) ?>...</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge bg-primary"><?= $annonce['prix'] ?> €</span>
-                            <a href="#" class="btn btn-outline-primary">Voir plus</a>
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1"><?= $annonce['nom_marque']?></h5>
+                                <h6 class="card-subtitle text-muted"><?= $annonce['nom_modele'] ?></h6>
+                            </div>
+                            <span class="badge bg-dark"><?= $annonce['annee'] ?></span>
+                        </div>
+                        
+                        <p class="card-text"><?= $annonce['designation'] ?></p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <div>
+                                <span class="text-muted d-block small">Kilométrage</span>
+                                <span class="fw-bold"><?= number_format($annonce['kilometrage'], 0, ',', ' ') ?> km</span>
+                            </div>
+                            <div class="text-end">
+                                <span class="text-primary fs-4 fw-bold"><?= number_format($annonce['prix'], 0, ',', ' ') ?> €</span>
+                                <a href="annonce.php?id=<?= $annonce['idAnnonce'] ?>" class="btn btn-primary btn-sm d-block mt-1">Voir plus</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,13 +142,13 @@ if (!isset($_SESSION['email'])) {
             <div class="col-md-6">
                 <h5>Contact</h5>
                 <ul class="list-unstyled">
-                    <li>Email : contact@auto-annonces.com</li>
+                    <li>Email : contact@trouvetacaisse.com</li>
                     <li>Tél : 01 23 45 67 89</li>
                 </ul>
             </div>
         </div>
         <div class="text-center mt-3">
-            <p>&copy; 2025 Auto-Annonces - Tous droits réservés</p>
+            <p>&copy; 2025 trouvetacaisse - Tous droits réservés</p>
         </div>
     </div>
 </footer>';
