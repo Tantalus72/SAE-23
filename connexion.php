@@ -13,10 +13,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['email']) && !empty($_POST['password'])) {
         if(login($_POST['email'], $_POST['password'])) {
             $_SESSION['email'] = $_POST['email'];
-            $fichier = fopen('../logs/access.log','a+');
+            /*$fichier = fopen('../logs/access.log','a+');
             fputs($fichier,$_POST['email']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS\of F Y h:i:s A')." sous le status admin ? :".isAdmin($_SESSION["email"])." s'est connecté");
             fputs($fichier,"\n");
-            fclose($fichier);
+            fclose($fichier);*/
+            $fichier = fopen('../logs/access.log','a+');
+            fputs($fichier,'ecrit');
             header('Location: index.php');
             exit();
         } else {
