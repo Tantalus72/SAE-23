@@ -27,51 +27,57 @@ try {
         // Traitement de l'image
         $target_dir = "ressources/image/annonces/";
         $target_file = $target_dir . basename($_FILES["img"]["name"]);
-        var_dump($_FILES["img"]);
+        // var_dump($_FILES["img"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         // Check if image file is a actual image or fake image
         if(isset($_POST["submit"])) {
             $check = getimagesize($_FILES["img"]["name"]);
             if($check !== false) {
-                // echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
+                $uploadOk = 0; // 0 = ok
             } else {
                 // echo "File is not an image.";
-                $uploadOk = 0;
+                $uploadOk = 1; // pas d'image
             }
         }
 
         // Check if file already exists
         if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
+            $uploadOk = 2; // 2 = deja existant
         }
 
         // Check file size
-        if ($_FILES["fileToUpload"]["size"] > 500000) {
-        echo "Sorry, your file is too large.";
-        $uploadOk = 0;
+        if ($_FILES["img"]["size"] > 2*10**6) { // 2 Mo
+            $uploadOk = 3; // 3 = trop gros
         }
 
         // Allow certain file formats
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif" ) {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        $uploadOk = 0;
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+            $uploadOk = 4; // 4 = mauvais format
         }
 
 
         if ($uploadOk == 1) {
             if (move_uploaded_file($_FILES["img"]["tmp_name"], $target_file)) {
-                echo "The file ". htmlspecialchars( basename( $_FILES["img"]["name"])). " has been uploaded.";
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
         }
 
         // Validation des données
-        if (empty($idMarque) || empty($idModele) || empty($designation) || $uploadOk != 1) {
+      
+         if ($uploadOk != 0) {
+            switch ($uploadOk) {
+                case -1:
+                    throw new Exception("Le fichier n'est pas une image valide");
+                case 2:
+                    throw new Exception("Le fichier existe déjà");
+                case 3:
+                    throw new Exception("Le fichier est trop volumineux");
+                case 4:
+                    throw new Exception("Format de fichier non autorisé");
+            }
+        } else if (empty($idMarque) || empty($idModele) || empty($designation)) {
             throw new Exception("Tous les champs obligatoires doivent être remplis");
         }
 
@@ -253,7 +259,7 @@ try {
                 
                 <div class="col-md-4">
                     <label for="img">Ajouter une image</label>
-                    <input type="file" class="form-control" id="img" name="img" accept="image/jpg,image/png,image/gif">
+                    <input type="file" class="form-control" id="img" name="img" accept="image/jpeg, image/png, image/gif">
                     <div class="form-text">Formats acceptés : JPG, PNG, GIF.</div>
                 </div>
                 

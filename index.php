@@ -41,7 +41,7 @@ require_once 'functions/functions.php';
 
                 <!-- Sous-titre -->
                 <p class="lead text-muted mb-4">
-                    Trouvez la voiture de vos rêves parmi notre sélection exclusive<br>
+                   Trouvez la voiture de vos rêves parmi notre sélection exclusive<br>
                     ou vendez votre véhicule en quelques clics
                 </p>
 
@@ -112,14 +112,14 @@ require_once 'functions/functions.php';
             <?php 
             $annonces = listerAnnonces();
             $count = 0;
-            var_dump($annonces);
+            // var_dump($annonces);
             if($annonces !== []) {
                 foreach($annonces as $annonce) {
-                    if($count++ >= 5) break;
+                    if($count++ >= 6) break;
             ?>
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow">
-                    <img src="ressources/image/annonces/<?php echo $annonce['path_img'] ?>" class="card-img-top" alt="Voiture d'occasion">
+                    <img src="ressources/image/annonces/<?php echo $annonce['path_img'] ?>" class="card-img-top" alt="Voiture d'occasion" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div>
