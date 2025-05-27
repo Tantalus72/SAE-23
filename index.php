@@ -18,34 +18,16 @@ if (!isset($_SESSION['email'])) {
 <body>
     
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">
-            <img src="ressources/image/TROUVETACAISSELOGO.png" alt="Logo" class="img-fluid">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="index.php">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="annonces.php">Annonces</a></li>
-                <li class="nav-item"><a class="nav-link" href="rechercher.php">Rechercher</a></li>
-                <?php if(isAdmin($_SESSION['email'] ?? '')) { ?>
-                <li class="nav-item"><a class="nav-link" href="insertion.php">Insertion</a></li>
-                <li class="nav-item"><a class="nav-link" href="suppression.php">Suppression</a></li>
-                <?php }; ?>
-            </ul>
-            <ul class="navbar-nav">
-            
-                <li class="nav-item"><a class="nav-link" href="logout.php">Déconnexion</a></li>
-                
-            </ul>
-        </div>
-    </div>
-</nav>
+    <?php include 'navbar.php'; ?>
+
+    <?php
+        if (empty($_SESSION)) {
+    ?>
 
 
+    <!-- AJOUTER PAGE ACCUEIL 'Vous n'êtes pas connecté' + bouton Se connecter  / Créer un compte -->
+
+    <?php } else { ?>
     <header class="hero-section">
         <div class="video-container">
             <div id="videoCarousel" class="carousel slide carousel-fade w-100 h-100" data-bs-ride="carousel">
@@ -130,28 +112,13 @@ if (!isset($_SESSION['email'])) {
             <?php }; ?>
         </div>
     </main>
+    
+    
+    <?php } ?>
 
-    <footer class="bg-dark text-white mt-5">
-    <div class="container py-4">
-        <div class="row">
-            <div class="col-md-6">
-                <h5>À propos</h5>
-                <p>Site d'annonces de voitures d'occasion - Projet PHP <br>
-                    Réalisé par GIRAULT Erwann et SENES Tiziano</p>
-            </div>
-            <div class="col-md-6">
-                <h5>Contact</h5>
-                <ul class="list-unstyled">
-                    <li>Email : contact@trouvetacaisse.com</li>
-                    <li>Tél : 01 23 45 67 89</li>
-                </ul>
-            </div>
-        </div>
-        <div class="text-center mt-3">
-            <p>&copy; 2025 trouvetacaisse - Tous droits réservés</p>
-        </div>
-    </div>
-</footer>';
+
+    <?php include 'footer.php'; ?>
+
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
