@@ -73,6 +73,12 @@ function listerAnnonces()	{
 function delete_annonce($id) {
     try {
         $pdo = getPDO();
+        $temp = $pdo->prepare("SELECT path_img FROM annonces WHERE idAnnonce = ?");
+        $temp->execute([$id]);
+        $temp = $temp->fetch(PDO::FETCH_ASSOC);
+        var_dump($temp);
+        unlink("../ressources/images/annonces/".$temp["path_img"]);
+
         $stmt = $pdo->prepare("DELETE FROM annonces WHERE idAnnonce = ?");
         return $stmt->execute([$id]);
     } catch (PDOException $e) {
