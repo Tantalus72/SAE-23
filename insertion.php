@@ -202,7 +202,13 @@ try {
                     <input type="number" class="form-control" id="prix" name="prix" 
                            min="0" required>
                 </div>
-
+                
+                <div>
+                    <label for="img">Ajouter une image</label>
+                    <input type="file" class="form-control" id="img" name="img" accept="image/*">
+                    <div class="form-text">Formats acceptés : JPG, PNG, GIF. Taille maximale : 2 Mo.</div>
+                </div>
+                
                 <div class="col-12 mt-4">
                     <button type="submit" class="btn btn-primary btn-lg">Créer l'annonce</button>
                 </div>

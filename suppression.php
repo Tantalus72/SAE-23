@@ -153,7 +153,7 @@ $annonces = listerAnnonces();
                             <input type="hidden" name="id" value="<?= $annonce['idAnnonce'] ?>">
                             <div class="input-group">
                                 <input type="text" name="captcha" class="form-control" placeholder="CAPTCHA" required>
-                                <img src="image.php?rand='+Math.random()" 
+                                <img src="image.php" 
                                     onclick="this.src='image.php?rand='+Math.random()" 
                                     alt="CAPTCHA" 
                                     style="height: 40px; margin-left: 10px;">
