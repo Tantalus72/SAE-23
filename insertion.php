@@ -23,6 +23,26 @@ try {
         $kilometrage = (int)$_POST['kilometrage'];
         $prix = (int)$_POST['prix'];
 
+
+        // Traitement de l'image
+        $target_dir = "ressources/image/annonces/";
+        $target_file = $target_dir . basename($_FILES["img"]["name"]);
+        var_dump($_FILES["img"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["submit"])) {
+            $check = getimagesize($_FILES["img"]["name"]);
+            if($check !== false) {
+                // echo "File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                // echo "File is not an image.";
+                $uploadOk = 0;
+            }
+        }
+
+
         // Validation des données
         if (empty($idMarque) || empty($idModele) || empty($designation)) {
             throw new Exception("Tous les champs obligatoires doivent être remplis");
@@ -30,8 +50,8 @@ try {
 
         // Insertion
         $stmt = $pdo->prepare("INSERT INTO annonces 
-            (idMarque, idModele, designation, annee, kilometrage, prix)
-            VALUES (?, ?, ?, ?, ?, ?)");
+            (idMarque, idModele, designation, annee, kilometrage, prix, path_img)
+            VALUES (?, ?, ?, ?, ?, ?, ?)");
         
         $stmt->execute([
             $idMarque,
@@ -217,29 +237,6 @@ try {
     </main>
 
     <?php } include 'footer.php'; ?>
-
-
-    <?php 
-
-
-    $target_dir = "ressources/image/annonces/";
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    // Check if image file is a actual image or fake image
-    if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
-    }
-    }
-
-
-    ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>

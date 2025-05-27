@@ -112,14 +112,14 @@ require_once 'functions/functions.php';
             <?php 
             $annonces = listerAnnonces();
             $count = 0;
-            
+            var_dump($annonces);
             if($annonces !== []) {
                 foreach($annonces as $annonce) {
                     if($count++ >= 5) break;
             ?>
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Voiture d'occasion">
+                    <img src="ressources/image/annonces/<?php echo $annonce['path_img'] ?>" class="card-img-top" alt="Voiture d'occasion">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div>
