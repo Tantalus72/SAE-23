@@ -32,8 +32,8 @@ require_once 'functions/functions.php';
         <div class="card shadow-lg p-4 p-md-5 border-0 text-center">
             <div class="card-body">
                 <!-- Icône de bienvenue -->
-                <div id="logo-accueil" class="mb-4 text-center">
-                    <img src="ressources/image/TROUVETACAISSELOGO.png" class="img-fluid" alt="Logo TrouveTaCaisse">
+                <div class="mb-4 text-center">
+                    <img src="ressources/image/TROUVETACAISSELOGO.png" class="img-fluid" alt="Logo TrouveTaCaisse" style="filter: brightness(0) saturate(100%); width: 200px; height: auto">
                 </div>
 
                 <!-- Titre principal -->

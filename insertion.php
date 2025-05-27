@@ -188,7 +188,7 @@ try {
                 <div class="col-md-4">
                     <label for="annee" class="form-label">Année</label>
                     <input type="number" class="form-control" id="annee" name="annee" 
-                           min="1900" max="<?= date('Y') + 1 ?>" required>
+                           min="1770" max="<?= date('Y') + 1 ?>" required>
                 </div>
 
                 <div class="col-md-4">
