@@ -81,6 +81,21 @@ function delete_annonce($id) {
     }
 }
 
+
+function redirect($url,$tps) {
+        $temps = $tps * 1000;
+?>
+    <script type="text/javascript">
+
+        function redirect() {
+            window.location = '<?php echo $url; ?>';
+        }
+        setTimeout(redirect(), <?php echo $temps; ?>);
+    </script>
+<?php
+}
+
+
 // Fonction de connexion PDO (si non existante)
 function getPDO() {
     try {

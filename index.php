@@ -1,10 +1,10 @@
 <?php
 session_start();
 require_once 'functions/functions.php';
-if (!isset($_SESSION['email'])) {
-    header('Location: connexion.php');
-    exit();
-}
+// if (!isset($_SESSION['email'])) {
+//     header('Location: connexion.php');
+//     exit();
+// }
 
 ?>
 <html lang="fr">
@@ -24,8 +24,47 @@ if (!isset($_SESSION['email'])) {
         if (empty($_SESSION)) {
     ?>
 
+    <div class="container my-5">
+        <div class="card shadow-lg p-4 p-md-5 border-0 text-center">
+            <div class="card-body">
+                <!-- Icône de bienvenue -->
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-emoji-smile text-primary" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                    </svg>
+                </div>
 
-    <!-- AJOUTER PAGE ACCUEIL 'Vous n'êtes pas connecté' + bouton Se connecter  / Créer un compte -->
+                <!-- Titre principal -->
+                <h1 class="fw-bold mb-3">Bienvenue sur Auto-Annonces</h1>
+
+                <!-- Sous-titre -->
+                <p class="lead text-muted mb-4">
+                    Trouvez la voiture de vos rêves parmi notre sélection exclusive<br>
+                    ou vendez votre véhicule en quelques clics
+                </p>
+
+                <!-- Boutons d'action -->
+                <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+                    <a href="login.php" class="btn btn-primary btn-lg px-4 py-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right me-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                        </svg>
+                        Connexion
+                    </a>
+
+                    <a href="register.php" class="btn btn-outline-primary btn-lg px-4 py-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus me-2" viewBox="0 0 16 16">
+                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                        Créer un compte
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php } else { ?>
     <header class="hero-section">
