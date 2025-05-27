@@ -88,17 +88,15 @@ function delete_annonce($id) {
 }
 
 
-function redirect($url,$tps) {
-        $temps = $tps * 1000;
-?>
+function redirect($url, $tps) {
+    $temps = $tps * 1000;
+    ?>
     <script type="text/javascript">
-
-        function redirect() {
-            window.location = '<?php echo $url; ?>';
-        }
-        setTimeout(redirect(), <?php echo $temps; ?>);
+        setTimeout(function() {
+            window.location.href = '<?= $url ?>';
+        }, <?= $temps ?>);
     </script>
-<?php
+    <?php
 }
 
 

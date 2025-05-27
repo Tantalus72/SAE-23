@@ -15,6 +15,15 @@
                     ou vendez votre véhicule en quelques clics
                 </p>
 
+                <p class="lead text-muted fw-bold mb-4">
+                    Redirection vers la page de connexion dans <span id="countdown">10</span> secondes...                
+                </p>
+                <div class="text-center my-3">
+                    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Chargement...</span>
+                    </div>
+                </div>
+
                 <!-- Boutons d'action -->
                 <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
                     <a href="login.php" class="btn btn-primary btn-lg px-4 py-3">
@@ -28,3 +37,13 @@
             </div>
         </div>
     </div>
+<script>
+    // Compte à rebours
+    let seconds = 10;
+    const countdownEl = document.getElementById('countdown');
+    if(countdownEl) {
+        setInterval(() => {
+            countdownEl.textContent = --seconds > 0 ? seconds : '';
+        }, 1000);
+    }
+</script>

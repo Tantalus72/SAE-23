@@ -20,7 +20,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link" href="index.php">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="annonces.php">Annonces</a></li>
                 <?php if(isAdmin($_SESSION['email'] ?? '')) { ?>
                 <li class="nav-item"><a class="nav-link" href="rechercher.php">Modification</a></li>
                 <li class="nav-item"><a class="nav-link" href="/insertion.php">Insertion</a></li>

@@ -27,6 +27,8 @@ require_once 'functions/functions.php';
     if (empty($_SESSION)) {
 
         include 'page_no_connect.php';
+        redirect('connexion.php', 10);
+        exit();
 
     } else { ?>
     <header class="hero-section">
@@ -72,11 +74,9 @@ require_once 'functions/functions.php';
         <div class="row">
             <?php 
             $annonces = listerAnnonces();
-            $count = 0;
             // var_dump($annonces);
             if($annonces !== []) {
                 foreach($annonces as $annonce) {
-                    if($count++ >= 6) break;
             ?>
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow">
