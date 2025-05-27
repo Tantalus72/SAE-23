@@ -203,10 +203,10 @@ try {
                            min="0" required>
                 </div>
                 
-                <div>
+                <div class="col-md-4">
                     <label for="img">Ajouter une image</label>
-                    <input type="file" class="form-control" id="img" name="img" accept="image/*">
-                    <div class="form-text">Formats acceptés : JPG, PNG, GIF. Taille maximale : 2 Mo.</div>
+                    <input type="file" class="form-control" id="img" name="img" accept="image/jpg,image/png,image/gif">
+                    <div class="form-text">Formats acceptés : JPG, PNG, GIF.</div>
                 </div>
                 
                 <div class="col-12 mt-4">

@@ -4,7 +4,6 @@ session_start();
 // Générer un code aléatoire
 $code = substr(str_shuffle("ABCDEFGHJKLMNPQRSTUVWXYZ23456789"), 0, 5);
 $_SESSION['code'] = $code;
-$code = $code.$_GET["rand"];
 // Créer l'image
 $image = imagecreatetruecolor(150, 50);
 $bg = imagecolorallocate($image, 255, 255, 255);
