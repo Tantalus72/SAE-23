@@ -9,13 +9,14 @@
             <div class="col-md-6">
                 <h5>Contact</h5>
                 <ul class="list-unstyled">
-                    <li>Email : contact@auto-annonces.com</li>
+                    <li>Email : contact@trouvetacaisse.com</li>
                     <li>Tél : 01 23 45 67 89</li>
                 </ul>
             </div>
         </div>
         <div class="text-center mt-3">
-            <p>&copy; 2025 Auto-Annonces - Tous droits réservés</p>
+            <p>&copy; 2025 TrouveTaCaisse
+                 - Tous droits réservés</p>
         </div>
     </div>
 </footer>';

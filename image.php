@@ -15,6 +15,7 @@ $font = 'ressources/fonts/arial.ttf';
 // Ajouter du bruit
 for($i=0; $i<5; $i++) {
     $color = imagecolorallocate($image, rand(0,255), rand(0,255), rand(0,255));
+    
     imageline($image, rand(0,150), rand(0,50), rand(0,150), rand(0,50), $color);
 }
 

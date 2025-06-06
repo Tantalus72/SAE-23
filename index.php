@@ -56,9 +56,9 @@ require_once 'functions/functions.php';
                                     Bienvenue <br><span class="text-primary"><?= $_SESSION['email']?> </span>
                             </h1>
                             <p class="lead mb-5 text-white-75 text-white">Découvrez notre incroyable collection</p>
-                            <a href="annonces.php" class="btn btn-light btn-lg px-5 me-3">Explorer</a>
+                            <a href="index.php#annonce" class="btn btn-light btn-lg px-5 me-3">Explorer</a>
                             <?php if(!isset($_SESSION['email'])) { ?>
-                                <a href="login.php" class="btn btn-outline-light btn-lg px-5">Connexion</a>
+                                <a href="connexion.php" class="btn btn-outline-light btn-lg px-5">Connexion</a>
                             <?php }; ?>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ require_once 'functions/functions.php';
 
 
     <main class="container py-5">
-        <h2 class="text-center mb-5">Nos dernières annonces</h2>
+        <h2 id="annonce" class="text-center mb-5">Nos dernières annonces</h2>
         <div class="row">
             <?php 
             $annonces = listerAnnonces();

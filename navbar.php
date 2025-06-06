@@ -21,7 +21,7 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link" href="index.php">Accueil</a></li>
                 <?php if(isAdmin($_SESSION['email'] ?? '')) { ?>
-                <li class="nav-item"><a class="nav-link" href="rechercher.php">Modification</a></li>
+                <li class="nav-item"><a class="nav-link" href="modification.php">Modification</a></li>
                 <li class="nav-item"><a class="nav-link" href="/insertion.php">Insertion</a></li>
                 <li class="nav-item"><a class="nav-link" href="suppression.php">Suppression</a></li>
                 <?php }; ?>

@@ -68,6 +68,25 @@ function listerAnnonces()	{
 }	
 
 
+//Fonction pour récupérer UNE voiture précise dans la bdd
+function getVoiture($id) {
+    $retour = false ;
+    try {
+
+        $pdo = getPDO();
+        $sql = $pdo->prepare("SELECT * FROM annonces WHERE idAnnonce = ?");
+        $sql->execute([$id]);
+        $voiture = $sql->fetch(PDO::FETCH_ASSOC);
+
+        $retour = $voiture;
+
+    } catch (PDOException $e) {
+        error_log("Erreur modification: " . $e->getMessage());
+    }
+
+    return $retour;
+
+}
 
 // Fonction de suppression d'une annonce
 function delete_annonce($id) {

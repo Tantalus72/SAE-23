@@ -9,6 +9,7 @@ if(isset($_SESSION['email'])) {
 }
 
 $error = '';
+
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['email']) && !empty($_POST['password'])) {
         if(login($_POST['email'], $_POST['password'])) {
@@ -40,9 +41,25 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Auto-Annonces</title>
+    <title>Connexion - TrouveTaCaisse</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
+   <script>
+function verif_login() {
+    const mdp = document.getElementById("password").value;
+    // Le mot de passe doit contenir au moins une majuscule et un caractère spécial
+    const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/;
+
+    if (!regex.test(mdp)) {
+        alert("Le mot de passe doit contenir au moins une majuscule et un caractère spécial.");
+        return false; // bloque la soumission du formulaire
+    }
+
+    return true; // autorise l'envoi
+}
+</script>
+
+
 </head>
 <body>
    
@@ -69,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if(isset($_SESSION['email'])) { ?>
                 <li class="nav-item"><a class="nav-link" href="logout.php">Déconnexion</a></li>
                 <?php } else { ?>
-                <li class="nav-item"><a class="nav-link" href="login.php">Connexion</a></li>
+                <li class="nav-item"><a class="nav-link" href="connexion.php">Connexion</a></li>
                 <?php }; ?>
             </ul>
         </div>
@@ -88,7 +105,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="alert alert-danger"><?= $error ?></div>
                         <?php }; ?>
 
-                        <form method="POST">
+                        <form method="POST" onsubmit="return verif_login()">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Adresse email</label>
                                 <input type="email" class="form-control" 
@@ -103,7 +120,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                                        id="password" name="password" required>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+                            <button type="submit" class="btn btn-primary w-100" onclick="return verif_login()">Se connecter</button>
                         </form>
                     </div>
                 </div>
@@ -122,13 +139,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-6">
                 <h5>Contact</h5>
                 <ul class="list-unstyled">
-                    <li>Email : contact@auto-annonces.com</li>
+                    <li>Email : contact@trouvetacaisse.com</li>
                     <li>Tél : 01 23 45 67 89</li>
                 </ul>
             </div>
         </div>
         <div class="text-center mt-3">
-            <p>&copy; 2025 Auto-Annonces - Tous droits réservés</p>
+            <p>&copy; 2025 TrouveTaCaisse - Tous droits réservés</p>
         </div>
     </div>
 </footer>';
