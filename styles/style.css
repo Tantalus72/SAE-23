@@ -39,6 +39,11 @@
     text-align: left;
 }
 
+/* style pour le bouton sélectionné */
+#captcha-container .selected {
+  border: 3px solid #0d6efd; /*  bleu */
+}
+
 
 @media (max-width: 1966px) {
     .hero-section {

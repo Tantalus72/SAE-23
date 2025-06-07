@@ -2,12 +2,6 @@
 session_start();
 require_once 'functions/functions.php';
 
-// Vérifie juste l’accès
-if (empty($_SESSION) || !isAdmin($_SESSION['email'] ?? '')) {
-    include 'partial/admin_access.php';
-    redirect('connexion.php', 10);
-    exit;
-}
 
 // Connexion et sélection des marques / modèles
 $dbFile = __DIR__ . '/bdd/db.sqlite';
@@ -26,7 +20,24 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <?php include 'navbar.php'; ?>
+    <?php include 'navbar.php'; ?>
+
+    <?php
+    if (empty($_SESSION)) {
+        include 'partial/connect_access.php';
+        include 'footer.php';
+        redirect('connexion.php', 10);
+        exit();
+
+    } else if (!isAdmin($_SESSION['email'] ?? '')) {
+        include 'partial/admin_access.php';
+        include 'footer.php';
+        redirect('connexion.php', 10);
+        exit();
+
+    } else {
+        if (empty($_GET) || !isset($_GET['idVoiture'])) {
+    ?>
 
   <main class="container mt-5">
     <h2>Créer une nouvelle annonce</h2>
@@ -39,9 +50,9 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
           <label for="idMarque" class="form-label">Marque</label>
           <select id="idMarque" name="idMarque" class="form-select" required>
             <option value="">Sélectionnez une marque</option>
-            <?php foreach($marques as $m): ?>
+            <?php foreach($marques as $m) { ?>
               <option value="<?= $m['idMarque'] ?>"><?= $m['nom'] ?></option>
-            <?php endforeach; ?>
+            <?php }; ?>
           </select>
         </div>
 
@@ -50,12 +61,12 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
           <label for="idModele" class="form-label">Modèle</label>
           <select id="idModele" name="idModele" class="form-select" required>
             <option value="">Sélectionnez un modèle</option>
-            <?php foreach($modeles as $m): ?>
+            <?php foreach($modeles as $m) { ?>
               <option value="<?= $m['idModele'] ?>"
                       data-marque="<?= $m['idMarque'] ?>">
                 <?= htmlspecialchars($m['nom']) ?>
               </option>
-            <?php endforeach; ?>
+            <?php }; ?>
           </select>
         </div>
 
@@ -102,7 +113,10 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
     </form>
   </main>
 
-  <?php include 'footer.php'; ?>
+  <?php }
+     }
+     include 'footer.php'; 
+  ?>
 
   <script>
   // Soumission AJAX via XMLHttpRequest
@@ -124,7 +138,6 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
         if (xhr.status === 200 && !json.error) {
           msgDiv.innerHTML = `<div class="alert alert-success">${json.success}</div>`;
           e.target.reset();
-          // éventuellement: setTimeout(() => window.location.reload(), 800);
         } else {
           msgDiv.innerHTML = `<div class="alert alert-danger">${json.error||'Erreur serveur'}</div>`;
         }
