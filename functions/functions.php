@@ -44,8 +44,7 @@ function isAdmin($mail){
 function listerAnnonces()	{
     $retour = false;
     try {
-        $pdo = new PDO('sqlite:bdd/db.sqlite');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = getPDO();
         
         $sql = "SELECT 
                     a.*, 
@@ -59,9 +58,9 @@ function listerAnnonces()	{
         $stmt = $pdo->query($sql);
         $retour = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
+        
     } catch (PDOException $e) {
         error_log("Erreur BDD: " . $e->getMessage());
-        $retour = false;
     }
     
     return $retour;
@@ -119,10 +118,13 @@ function redirect($url, $tps) {
 }
 
 
-// Fonction de connexion PDO (si non existante)
 function getPDO() {
     try {
-        return new PDO('sqlite:bdd/db.sqlite');
+
+        $pdo = new PDO("sqlite:bdd/db.sqlite");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        return $pdo;
     } catch (PDOException $e) {
         die("Erreur connexion BDD: " . $e->getMessage());
     }

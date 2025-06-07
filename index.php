@@ -1,10 +1,7 @@
 <?php
 session_start();
 require_once 'functions/functions.php';
-// if (!isset($_SESSION['email'])) {
-//     header('Location: connexion.php');
-//     exit();
-// }
+
 
 ?>
 
@@ -74,7 +71,7 @@ require_once 'functions/functions.php';
         <div class="row">
             <?php 
             $annonces = listerAnnonces();
-            // var_dump($annonces);
+            error_log("Count annonces retournées : " . count($annonces));
             if($annonces !== []) {
                 foreach($annonces as $annonce) {
             ?>
