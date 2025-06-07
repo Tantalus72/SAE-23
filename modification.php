@@ -31,11 +31,17 @@ $annonces = listerAnnonces();
     if (empty($_SESSION)) {
         
         include 'partial/connect_access.php';
-    
+        include 'footer.php';
+        redirect('connexion.php', 10);
+        exit();
+
    } else if(!isAdmin($_SESSION['email'] ?? '')) {
         
         include 'partial/admin_access.php';
-    
+        include 'footer.php';
+        redirect('connexion.php', 10);
+        exit();
+
     } else { 
         if (empty($_GET) || !isset($_GET['idVoiture'])) {
     ?>
@@ -158,6 +164,10 @@ $annonces = listerAnnonces();
         </div>
     </main>
     
-    <?php } include 'footer.php'; ?>
+    <?php } 
+        }
+        
+        include 'footer.php';
+    ?>
 </body>
 </html>

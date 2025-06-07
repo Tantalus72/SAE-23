@@ -44,11 +44,17 @@ $annonces = listerAnnonces();
     if (empty($_SESSION)) {
         
         include 'partial/connect_access.php';
-    
+        include 'footer.php';
+        redirect('connexion.php', 10);
+        exit();
+
    } else if(!isAdmin($_SESSION['email'] ?? '')) {
         
         include 'partial/admin_access.php';
-    
+        include 'footer.php';
+        redirect('connexion.php', 10);
+        exit();
+
     } else { ?>
 
 
@@ -98,21 +104,9 @@ $annonces = listerAnnonces();
             </tbody>
         </table>
     </div>
-     <script>
-      // Compte à rebours
-      let seconds = 5;
-      const countdownEl = document.getElementById('countdown');
-      if (countdownEl) {
-        setInterval(() => {
-          countdownEl.textContent = --seconds > 0 ? seconds : '';
-        }, 1000);
-      }
-    </script> <?php 
-    
-    // Redirection avec compte à rebours
-    redirect('index.php', 5);
-    exit();
+    <?php 
 
- } include 'footer.php'; ?>
+ } 
+ include 'footer.php'; ?>
 </body>
 </html>

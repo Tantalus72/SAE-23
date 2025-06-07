@@ -14,6 +14,15 @@
                     Vous devez être connecté pour accéder à cette page.<br>
                     Merci de vous identifier.
                 </p>
+                
+                <p class="lead text-muted fw-bold mb-4">
+                    Redirection vers la page de connexion dans <span id="countdown">10</span> secondes...                
+                </p>
+                <div class="text-center my-3">
+                    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Chargement...</span>
+                    </div>
+                </div>
 
                 <!-- Bouton de retour -->
                 <a href="index.php" class="btn btn-primary btn-lg px-5">
@@ -25,3 +34,14 @@
             </div>
         </div>
     </div>
+
+<script>
+    // Compte à rebours
+    let seconds = 10;
+    const countdownEl = document.getElementById('countdown');
+    if(countdownEl) {
+        setInterval(() => {
+            countdownEl.textContent = --seconds > 0 ? seconds : '';
+        }, 1000);
+    }
+</script>
