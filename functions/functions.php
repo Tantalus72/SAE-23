@@ -91,14 +91,28 @@ function getVoiture($id) {
 function delete_annonce($id) {
     try {
         $pdo = getPDO();
-        $temp = $pdo->prepare("SELECT path_img FROM annonces WHERE idAnnonce = ?");
-        $temp->execute([$id]);
-        $temp = $temp->fetch(PDO::FETCH_ASSOC);
-        var_dump($temp);
-        unlink("../ressources/images/annonces/".$temp["path_img"]);
 
-        $stmt = $pdo->prepare("DELETE FROM annonces WHERE idAnnonce = ?");
-        return $stmt->execute([$id]);
+        // Récupérer le chemin de l'image
+        $stmtImg = $pdo->prepare("SELECT path_img FROM annonces WHERE idAnnonce = ?");
+        $stmtImg->execute([$id]);
+        $result = $stmtImg->fetch(PDO::FETCH_ASSOC); //on récupère le nom de l'image
+
+        if ($result && !empty($result['path_img']) && $result['path_img'] !== 'default_img.png') {
+            // Construction du chemin absolu correct
+            $imagePath = __DIR__ . '/../ressources/images/annonces/' . $result['path_img'];
+
+            // Vérifie si le fichier existe avant suppression
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            } else {
+                error_log("Fichier image non trouvé : $imagePath");
+            }
+        }
+
+        // Supprimer l'annonce de la BDD
+        $stmtDelete = $pdo->prepare("DELETE FROM annonces WHERE idAnnonce = ?");
+        return $stmtDelete->execute([$id]);
+
     } catch (PDOException $e) {
         error_log("Erreur suppression: " . $e->getMessage());
         return false;
