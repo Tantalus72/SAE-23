@@ -19,4 +19,4 @@
                  - Tous droits réservés</p>
         </div>
     </div>
-</footer>';
+</footer>

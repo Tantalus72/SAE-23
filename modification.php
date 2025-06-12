@@ -52,7 +52,8 @@ $annonces = listerAnnonces();
         <?php if ($success) { ?>
             <div class="alert alert-success"><?= $success ?></div>
         <?php } ?>
-
+    
+    <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -74,7 +75,7 @@ $annonces = listerAnnonces();
                         <form method="POST" action="modification.php?idVoiture=<?= $annonce['idAnnonce'] ?>" class="form-inline">
                             <input type="hidden" name="id" value="<?= $annonce['idAnnonce'] ?>">
                             <div class="input-group">
-                                <button type="submit" class="btn btn-primary ms-2">Modification</button>
+                                <button type="submit" class="btn btn-primary w-100">Modification</button>
                             </div>
                         </form>
                     </td>
@@ -82,6 +83,7 @@ $annonces = listerAnnonces();
                 <?php } ?>
             </tbody>
         </table>
+        </div>
     </main>
 
     <?php 
