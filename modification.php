@@ -120,19 +120,19 @@ $annonces = listerAnnonces();
                 <div class="col-md-4">
                     <label for="annee" class="form-label">Année</label>
                     <input type="number" class="form-control" id="annee" name="annee" 
-                        min="1770" max="<?= date('Y') + 1 ?>" value="<?= $VOITURE['annee'] ?>" required>
+                        value="<?= $VOITURE['annee'] ?>" required>
                 </div>
 
                 <div class="col-md-4">
                     <label for="kilometrage" class="form-label">Kilométrage</label>
                     <input type="number" class="form-control" id="kilometrage" name="kilometrage" 
-                        min="0" value="<?= $VOITURE['kilometrage'] ?>" required>
+                        value="<?= $VOITURE['kilometrage'] ?>" required>
                 </div>
 
                 <div class="col-md-4">
                     <label for="prix" class="form-label">Prix</label>
                     <input type="number" class="form-control" id="prix" name="prix" 
-                        min="0" value="<?= $VOITURE['prix'] ?>" required>
+                        value="<?= $VOITURE['prix'] ?>" required>
                 </div>
 
                 <div class="col-md-4">
@@ -185,6 +185,8 @@ $annonces = listerAnnonces();
 
         // Message d'erreur/succès
         const msgDiv = document.getElementById('message');
+
+        // Récupérer la valeur de l'input année à l'envoi du formulaire
 
         function generateCaptcha() {
             const container = document.getElementById('captcha-container');
@@ -251,6 +253,32 @@ $annonces = listerAnnonces();
             // Cette constante est vraie uniquement si l'utilisateur a selectionné le bon emoji
             const isValid = document.getElementById('captcha_valid').value === '1';
             
+            // On récupère les valeurs des inputs
+            const anneeInput = document.getElementById('annee');
+            const kilometrageInput = document.getElementById('kilometrage');
+            const prixInput = document.getElementById('prix');
+            
+
+            // On vérifie que l'année est valide
+            if (anneeInput.value < 1770 || anneeInput.value > new Date().getFullYear() + 1) {
+                msgDiv.innerHTML = `<div class="alert alert-danger">Année invalide</div>`;
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            // On vérifie que le kilométrage est positif
+            if (kilometrageInput.value < 0) {
+                msgDiv.innerHTML = `<div class="alert alert-danger">Kilométrage invalide</div>`;
+                window.scrollTo(0, 0);
+                return;
+            }
+
+            // On vérifie que le prix est positif
+            if (prixInput.value < 0) {
+                msgDiv.innerHTML = `<div class="alert alert-danger">Prix invalide</div>`;
+                window.scrollTo(0, 0);
+                return;
+            }
 
 
             if (!isValid) { // Si l'utilisateur s'est trompé d'emoji

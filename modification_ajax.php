@@ -96,11 +96,11 @@ try {
     
     // Récupère les infos mises à jour
     $stmt2 = $pdo->prepare("
-    SELECT a.*, m.nom AS nom_marque, mo.nom AS nom_modele
-    FROM annonces a
-    JOIN marques m ON a.idMarque = m.idMarque
-    JOIN modeles mo ON a.idModele = mo.idModele
-    WHERE a.idAnnonce = ?
+        SELECT a.*, m.nom AS nom_marque, mo.nom AS nom_modele
+            FROM annonces a
+            JOIN marques m ON a.idMarque = m.idMarque
+            JOIN modeles mo ON a.idModele = mo.idModele
+            WHERE a.idAnnonce = ?
     ");
     $stmt2->execute([$idAnnonce]);
     $updated = $stmt2->fetch(PDO::FETCH_ASSOC);
@@ -125,3 +125,4 @@ try {
 }
 
 echo json_encode($response);
+?>
