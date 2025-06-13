@@ -11,27 +11,19 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $marques  = $pdo->query("SELECT * FROM marques")->fetchAll(PDO::FETCH_ASSOC);
 $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Créer une annonce</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <?php include 'navbar.php'; ?>
+
+    <?php include 'partial/navbar.php'; ?>
 
     <?php
     if (empty($_SESSION)) {
         include 'partial/connect_access.php';
-        include 'footer.php';
+        include 'partial/footer.php';
         redirect('connexion.php', 10);
         exit();
 
     } else if (!isAdmin($_SESSION['email'] ?? '')) {
         include 'partial/admin_access.php';
-        include 'footer.php';
+        include 'partial/footer.php';
         redirect('connexion.php', 10);
         exit();
 
@@ -115,48 +107,52 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
 
   <?php }
      }
-     include 'footer.php'; 
+     include 'partial/footer.php'; 
   ?>
 
   <script>
-  // Soumission AJAX via XMLHttpRequest
-  document.getElementById('formAnnonce').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const xhr  = new XMLHttpRequest();
-    const data = new FormData(e.target);
 
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) {
-        let json;
-        try {
-          json = JSON.parse(xhr.responseText);
-        } catch {
-          return document.getElementById('message').innerHTML =
-            '<div class="alert alert-danger">Réponse invalide du serveur.</div>';
+    const msgDiv = document.getElementById('message'); // Message d'erreur
+
+
+
+    // Soumission AJAX via XMLHttpRequest
+    document.getElementById('formAnnonce').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const xhr  = new XMLHttpRequest();
+      const data = new FormData(e.target);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+          let json;
+          try {
+            json = JSON.parse(xhr.responseText);
+          } catch {
+            return document.getElementById('message').innerHTML =
+              '<div class="alert alert-danger">Réponse invalide du serveur.</div>';
+          }
+          if (xhr.status === 200 && !json.error) {
+            msgDiv.innerHTML = `<div class="alert alert-success">${json.success}</div>`;
+            e.target.reset();
+          } else {
+            msgDiv.innerHTML = `<div class="alert alert-danger">${json.error||'Erreur serveur'}</div>`;
+          }
         }
-        const msgDiv = document.getElementById('message');
-        if (xhr.status === 200 && !json.error) {
-          msgDiv.innerHTML = `<div class="alert alert-success">${json.success}</div>`;
-          e.target.reset();
-        } else {
-          msgDiv.innerHTML = `<div class="alert alert-danger">${json.error||'Erreur serveur'}</div>`;
-        }
-      }
-    };
+      };
 
-    xhr.open('POST', 'insertion_ajax.php', true);
-    xhr.send(data);
-  });
-
-  // Filtrer dynamiquement les modèles
-  document.getElementById('idMarque').addEventListener('change', function() {
-    const marque = this.value;
-    document.querySelectorAll('#idModele option').forEach(opt => {
-      opt.style.display = (opt.value === '' || opt.dataset.marque === marque)
-                        ? 'block' : 'none';
+      xhr.open('POST', 'insertion_ajax.php', true);
+      xhr.send(data);
     });
-    document.getElementById('idModele').value = '';
-  });
+
+    // Filtrer dynamiquement les modèles
+    document.getElementById('idMarque').addEventListener('change', function() {
+      const marque = this.value;
+      document.querySelectorAll('#idModele option').forEach(opt => {
+        opt.style.display = (opt.value === '' || opt.dataset.marque === marque)
+                          ? 'block' : 'none';
+      });
+      document.getElementById('idModele').value = '';
+    });
   </script>
 </body>
 </html>

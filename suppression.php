@@ -29,26 +29,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['g-recap
 $annonces = listerAnnonces();
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Suppression d'annonces</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-</head>
-<body>
-<?php include 'navbar.php'; ?>
+<?php include 'partial/navbar.php'; ?>
 
 <?php
 if (empty($_SESSION)) {
     include 'partial/connect_access.php';
-    include 'footer.php';
+    include 'partial/footer.php';
     redirect('connexion.php', 10);
     exit();
 } elseif (!isAdmin($_SESSION['email'] ?? '')) {
     include 'partial/admin_access.php';
-    include 'footer.php';
+    include 'partial/footer.php';
     redirect('connexion.php', 10);
     exit();
 } else {
@@ -97,6 +88,8 @@ if (empty($_SESSION)) {
     </table>
 </div>
 
-<?php } include 'footer.php'; ?>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<?php } include 'partial/footer.php'; ?>
 </body>
 </html>

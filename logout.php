@@ -8,7 +8,7 @@ include 'functions/functions.php'
 ?>
 
 <?php
-include 'navbar.php';
+include 'partial/navbar.php';
 ?>
 
 <div class="container my-5 text-center">
@@ -36,7 +36,7 @@ include 'navbar.php';
 </script>
 
 <?php 
-include 'footer.php';
+include 'partial/footer.php';
 
 // Redirection avec compte à rebours
 redirect('index.php', 5);

@@ -16,26 +16,18 @@ $modeles = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
 $annonces = listerAnnonces();
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Modification d'annonces</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <?php include 'navbar.php'; ?>
+    <?php include 'partial/navbar.php'; ?>
 
     <?php
     if (empty($_SESSION)) {
         include 'partial/connect_access.php';
-        include 'footer.php';
+        include 'partial/footer.php';
         redirect('connexion.php', 10);
         exit();
 
     } else if (!isAdmin($_SESSION['email'] ?? '')) {
         include 'partial/admin_access.php';
-        include 'footer.php';
+        include 'partial/footer.php';
         redirect('connexion.php', 10);
         exit();
 
@@ -336,7 +328,7 @@ $annonces = listerAnnonces();
 
     <?php 
         } 
-        include 'footer.php';
+        include 'partial/footer.php';
     }
     ?>
 </body>

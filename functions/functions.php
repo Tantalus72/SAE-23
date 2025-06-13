@@ -123,7 +123,7 @@ function delete_annonce($id) {
 function redirect($url, $tps) {
     $temps = $tps * 1000;
     ?>
-    <script type="text/javascript">
+    <script>
         setTimeout(function() {
             window.location.href = '<?= $url ?>';
         }, <?= $temps ?>);

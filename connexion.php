@@ -35,63 +35,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - TrouveTaCaisse</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles/style.css">
-   <script>
-function verif_login() {
-    const mdp = document.getElementById("password").value;
-    // Le mot de passe doit contenir au moins une majuscule et un caractère spécial
-    const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/;
-
-    if (!regex.test(mdp)) {
-        alert("Le mot de passe doit contenir au moins une majuscule et un caractère spécial.");
-        return false; // bloque la soumission du formulaire
-    }
-
-    return true; // autorise l'envoi
-}
-</script>
-
-
-</head>
-<body>
    
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.php">
-            <img src="ressources/image/TROUVETACAISSELOGO.png" alt="Logo" class="img-fluid">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="index.php">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="annonces.php">Annonces</a></li>
-                <li class="nav-item"><a class="nav-link" href="rechercher.php">Rechercher</a></li>
-                <?php if(isAdmin($_SESSION['email'] ?? '')) { ?>
-                <li class="nav-item"><a class="nav-link" href="insertion.php">Insertion</a></li>
-                <li class="nav-item"><a class="nav-link" href="suppression.php">Suppression</a></li>
-                <?php }; ?>
-            </ul>
-            <ul class="navbar-nav">
-                <?php if(isset($_SESSION['email'])) { ?>
-                <li class="nav-item"><a class="nav-link" href="logout.php">Déconnexion</a></li>
-                <?php } else { ?>
-                <li class="nav-item"><a class="nav-link" href="connexion.php">Connexion</a></li>
-                <?php }; ?>
-            </ul>
-        </div>
-    </div>
-</nav>
+    <?php include 'partial/navbar.php'; ?>
 
 
     <div class="container mt-5">
@@ -128,29 +73,23 @@ function verif_login() {
         </div>
     </div>
 
-    <footer class="bg-dark text-white mt-5">
-    <div class="container py-4">
-        <div class="row">
-            <div class="col-md-6">
-                <h5>À propos</h5>
-                <p>Site d'annonces de voitures d'occasion - Projet PHP <br>
-                    Réalisé par GIRAULT Erwann et SENES Tiziano</p>
-            </div>
-            <div class="col-md-6">
-                <h5>Contact</h5>
-                <ul class="list-unstyled">
-                    <li>Email : contact@trouvetacaisse.com</li>
-                    <li>Tél : 01 23 45 67 89</li>
-                </ul>
-            </div>
-        </div>
-        <div class="text-center mt-3">
-            <p>&copy; 2025 TrouveTaCaisse - Tous droits réservés</p>
-        </div>
-    </div>
-</footer>';
+    <?php include 'partial/footer.php'; ?>
 
+    <script>
+        function verif_login() {
+            const mdp = document.getElementById("password").value;
+            // Le mot de passe doit contenir au moins une majuscule et un caractère spécial
+            const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])/;
 
+            if (!regex.test(mdp)) {
+                alert("Le mot de passe doit contenir au moins une majuscule et un caractère spécial.");
+                return false; // bloque la soumission du formulaire
+            }
+
+            return true; // autorise l'envoi
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

@@ -31,25 +31,12 @@ list($prixMin, $prixMax) = $pdo
 
 ?>
 
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrouveTaCaisse</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles/style.css">
-</head>
-<body>
-
-
     <?php
-    include 'navbar.php';
+    include 'partial/navbar.php';
 
     if (empty($_SESSION)) {
 
-        include 'page_no_connect.php';
+        include 'partial/page_no_connect.php';
         redirect('connexion.php', 10);
         exit();
 
@@ -168,8 +155,8 @@ list($prixMin, $prixMax) = $pdo
 
 
         <div class="row" id="annonces-container">
-
         </div>
+
     </main>
     
     <script>
@@ -180,7 +167,7 @@ list($prixMin, $prixMax) = $pdo
     // Dès que l'utilisateur tape un caractère, on annule le timer précédent et on relance après 500ms
     function debounceApplyFilters() {
         clearTimeout(timer);
-        timer = setTimeout(applyFilters, 500);
+        timer = setTimeout(applyFilters, 500);  
     }
 
     // Filtrage dynamique des modèles en fonction de la marque
@@ -238,8 +225,10 @@ list($prixMin, $prixMax) = $pdo
                             </div>`;
                     } else {
 
+                        console.log(resp.data)
                         // On génère les cards 
                         resp.data.forEach(a => {
+                            console.log(a)
                             const d = document.createElement('div');
                             d.className = 'col-md-4 mb-4';
                             d.innerHTML = `
@@ -266,7 +255,12 @@ list($prixMin, $prixMax) = $pdo
                                             </div>
                                             <div class="text-end">
                                                 <span class="text-primary fs-4 fw-bold">${Number(a.prix).toLocaleString('fr-FR')} €</span>
-                                            </div>
+                                            <?php if (isAdmin($_SESSION['email']))  { ?>
+                                                 <a href="modification.php?idVoiture=${a.idAnnonce}" class="btn btn-primary btn-sm d-block mt-1">Modifier</a>
+                                                
+                                            <?php }; ?>
+                                            </div>                                            
+
                                         </div>
                                     </div>
                                 </div>`;
@@ -290,7 +284,7 @@ list($prixMin, $prixMax) = $pdo
     <?php } ?>
 
 
-    <?php include 'footer.php'; ?>
+    <?php include 'partial/footer.php'; ?>
 
 
     
