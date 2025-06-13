@@ -1,6 +1,10 @@
+<!-- FONCTION DE LOGIN -->
 <?php function login($email, $password) {
     $retour = false;
-    $madb = new PDO('sqlite:bdd/comptes.sqlite');
+    
+    $madb = getPDO(); // On récupère l'objet PDO
+    
+    // On prépare la requête pour éviter les injections SQL
     $mail = $madb->quote($email);
     $pass = $madb->quote($password);
     $requete = "SELECT EMAIL, PASS FROM utilisateurs WHERE EMAIL = $mail AND PASS = $pass";
@@ -8,6 +12,7 @@
     $resultats = $madb->query($requete);
     $tableau = $resultats->fetchAll(PDO::FETCH_ASSOC);
 
+    // S'il y a bien un résultat, on considère que la connexion est réussie
     if (sizeof($tableau) != 0) {
         $retour = true; 
     }
@@ -18,34 +23,34 @@
 
 function isAdmin($mail){
     $retour = false ;
-    // 1. Création d'un objet PDO
-    $madb = new PDO('sqlite:bdd/comptes.sqlite'); 
+    
+    // On récupère l'objet PDO
+    $madb = getPDO(); 
 
-    // 2. Ecriture de la requête
     $mail= $madb->quote($mail);
-    // $pass = $madb->quote($pass);
     $requete = "SELECT STATUT FROM utilisateurs WHERE EMAIL = $mail" ;
-    //var_dump($requete);echo "<br/>";  	
 
-    // 3. Execution de la requête
+    // Execution de la requête
     $resultat = $madb->query($requete);
 
-    // 4. Récupération des résultats
     $tableau_assoc = $resultat->fetchAll(PDO::FETCH_ASSOC);
 
-    // 5. Traitement des résultats s'il y en a
+    // Traitement des résultats s'il y en a
     if (!empty($tableau_assoc)) {
         if ($tableau_assoc[0]["STATUT"] == 'admin') $retour = true;	
     } 
     return $retour;
 }
 
-
+// Fonction pour lister toutes les annonces
 function listerAnnonces()	{
-    $retour = false;
+    $retour = false; // Retour par défaut en cas d'erreur
+
     try {
+
         $pdo = getPDO();
         
+        // On écrit la requête pour récupérer toutes les annonces
         $sql = "SELECT 
                     a.*, 
                     m.nom as nom_marque, 
@@ -56,7 +61,7 @@ function listerAnnonces()	{
                 ORDER BY a.idAnnonce DESC";
 
         $stmt = $pdo->query($sql);
-        $retour = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $retour = $stmt->fetchAll(PDO::FETCH_ASSOC); // On stock les résultats dans $retour
         
         
     } catch (PDOException $e) {
@@ -119,19 +124,19 @@ function delete_annonce($id) {
     }
 }
 
-
+// Fonction de redirection
 function redirect($url, $tps) {
-    $temps = $tps * 1000;
+    $temps = $tps * 1000; // On convertit en ms
     ?>
     <script>
         setTimeout(function() {
             window.location.href = '<?= $url ?>';
-        }, <?= $temps ?>);
+        }, <?= $temps ?>); // On éxecute cette redirection uniquement après le délai calculé
     </script>
     <?php
 }
 
-
+// Création de l'objet PDO
 function getPDO() {
     try {
 
@@ -139,6 +144,7 @@ function getPDO() {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return $pdo;
+        
     } catch (PDOException $e) {
         die("Erreur connexion BDD: " . $e->getMessage());
     }

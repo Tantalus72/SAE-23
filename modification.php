@@ -32,7 +32,8 @@ $annonces = listerAnnonces();
         exit();
 
     } else {
-        if (empty($_GET) || !isset($_GET['idVoiture'])) {
+    
+        if (empty($_GET) || !isset($_GET['idVoiture'])) { //  Si l'utilisateur accède simplement à la page
     ?>
 
     <main class="container mt-5">
@@ -79,8 +80,9 @@ $annonces = listerAnnonces();
     </main>
 
     <?php 
-        } else if (!empty($_GET) && isset($_GET['idVoiture'])) { 
-            $VOITURE = getVoiture($_GET['idVoiture']);
+    
+        } else if (!empty($_GET) && isset($_GET['idVoiture'])) { // Si le paramètre idVoiture est présent dans l'URL
+            $VOITURE = getVoiture($_GET['idVoiture']); // On récupère les informations de la voiture
     ?>
 
     <main class="container mt-5">

@@ -233,10 +233,8 @@ list($prixMin, $prixMax) = $pdo
                             d.className = 'col-md-4 mb-4';
                             d.innerHTML = `
                                 <div class="card h-100 shadow">
-                                    <img src="ressources/image/annonces/${a.path_img}"
-                                        class="card-img-top"
-                                        alt="Voiture d'occasion"
-                                        style="height: 200px; object-fit: cover;">
+                                    <img src="ressources/image/annonces/${a.path_img}" class="card-img-top" alt="Voiture d'occasion" style="height: 200px; object-fit: cover;">
+                                    
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-start mb-3">
                                             <div>
@@ -255,12 +253,12 @@ list($prixMin, $prixMax) = $pdo
                                             </div>
                                             <div class="text-end">
                                                 <span class="text-primary fs-4 fw-bold">${Number(a.prix).toLocaleString('fr-FR')} €</span>
+                                            
                                             <?php if (isAdmin($_SESSION['email']))  { ?>
                                                  <a href="modification.php?idVoiture=${a.idAnnonce}" class="btn btn-primary btn-sm d-block mt-1">Modifier</a>
                                                 
                                             <?php }; ?>
                                             </div>                                            
-
                                         </div>
                                     </div>
                                 </div>`;

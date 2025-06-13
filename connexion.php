@@ -8,7 +8,7 @@ if(isset($_SESSION['email'])) {
     exit();
 }
 
-$error = '';
+$error = ''; // On définir une variable en cas d'erreur
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['email']) && !empty($_POST['password'])) {
@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h2 class="text-center mb-4">Connexion</h2>
                         
                         <?php if($error) {?>
-                        <div class="alert alert-danger"><?= $error ?></div>
+                            <div class="alert alert-danger"><?= $error ?></div>
                         <?php }; ?>
 
                         <form method="POST" onsubmit="return verif_login()">
