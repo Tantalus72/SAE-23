@@ -1,18 +1,17 @@
 <!-- FONCTION DE LOGIN -->
-<?php function login($email, $password) {
+<?php
+function login($email, $password) {
     $retour = false;
     
     $madb = getPDO(); // On récupère l'objet PDO
     
-    // On prépare la requête pour éviter les injections SQL
-    $mail = $madb->quote($email);
-    $pass = $madb->quote($password);
-    $requete = "SELECT EMAIL, PASS FROM utilisateurs WHERE EMAIL = $mail AND PASS = $pass";
+    // Requête préparée
+    $requete = "SELECT EMAIL, PASS FROM utilisateurs WHERE EMAIL = ? AND PASS = ?";
+    $stmt = $madb->prepare($requete);
+    $stmt->execute([$email, $password]);
 
-    $resultats = $madb->query($requete);
-    $tableau = $resultats->fetchAll(PDO::FETCH_ASSOC);
+    $tableau = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // S'il y a bien un résultat, on considère que la connexion est réussie
     if (sizeof($tableau) != 0) {
         $retour = true; 
     }
@@ -20,27 +19,24 @@
     return $retour;
 }
 
-
 function isAdmin($mail){
     $retour = false ;
     
-    // On récupère l'objet PDO
-    $madb = getPDO(); 
+    $madb = getPDO(); // On récupère l'objet PDO
 
-    $mail= $madb->quote($mail);
-    $requete = "SELECT STATUT FROM utilisateurs WHERE EMAIL = $mail" ;
+    $requete = "SELECT STATUT FROM utilisateurs WHERE EMAIL = ?" ;
+    $stmt = $madb->prepare($requete);
+    $stmt->execute([$mail]);
 
-    // Execution de la requête
-    $resultat = $madb->query($requete);
+    $tableau_assoc = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $tableau_assoc = $resultat->fetchAll(PDO::FETCH_ASSOC);
-
-    // Traitement des résultats s'il y en a
     if (!empty($tableau_assoc)) {
         if ($tableau_assoc[0]["STATUT"] == 'admin') $retour = true;	
     } 
     return $retour;
 }
+
+
 
 // Fonction pour lister toutes les annonces
 function listerAnnonces()	{
