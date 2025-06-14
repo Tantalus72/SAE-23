@@ -7,7 +7,9 @@ $success = '';
 
 // Traitement suppression avec reCAPTCHA
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'], $_POST['g-recaptcha-response'])) {
-    $recaptchaSecret = '6LfDnFkrAAAAAFnL0qNUwxDmNmVpC0FeA_a25oFu'; // Clé secrète
+    $recaptchaSecret = '6LfDnFkrAAAAAFnL0qNUwxDmNmVpC0FeA_a25oFu'; // Clé secrète pour always data
+
+    //$recaptcha = '6LeQ2WArAAAAAPvNExYcH8Czcq3YaecKI1RUZvFT'; // clé secret pour le serv de l'iut
 
     $recaptchaResponse = $_POST['g-recaptcha-response'];
     $verifyResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$recaptchaResponse}");
@@ -76,8 +78,13 @@ if (empty($_SESSION)) {
                     <form method="POST" class="form-inline">
                         <input type="hidden" name="id" value="<?= $annonce['idAnnonce'] ?>">
                         <div class="input-group">
-                            <!-- reCAPTCHA -->
+                            <!-- reCAPTCHA ALWAYS-->
                             <div class="g-recaptcha" data-sitekey="6LfDnFkrAAAAAKky5Q-OnQbXBRcgfA7tk3ZaOrZd"></div>
+
+                            <!-- ReCAPTCHA IUT -->
+                            <!--
+                            <div class="g-recaptcha" data-sitekey="6LeQ2WArAAAAAMvOVEpOE5YL_SV0PiCob-l1W26u"></div>
+                            -->
                             <button type="submit" class="btn btn-danger ms-2">Supprimer</button>
                         </div>
                     </form>

@@ -15,6 +15,7 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'partial/navbar.php'; ?>
 
     <?php
+    // redirection 
     if (empty($_SESSION)) {
         include 'partial/connect_access.php';
         include 'partial/footer.php';
@@ -112,13 +113,13 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
 
   <script>
 
-    const msgDiv = document.getElementById('message'); // Message d'erreur
+    const msgDiv = document.getElementById('message'); // message d'erreur
 
 
 
-    // Soumission AJAX via XMLHttpRequest
+    // Requete Ajax
     document.getElementById('formAnnonce').addEventListener('submit', function(e) {
-      e.preventDefault();
+      e.preventDefault(); //pour ne pas recharger la page
       const xhr  = new XMLHttpRequest();
       const data = new FormData(e.target);
 
@@ -144,7 +145,7 @@ $modeles  = $pdo->query("SELECT * FROM modeles")->fetchAll(PDO::FETCH_ASSOC);
       xhr.send(data);
     });
 
-    // Filtrer dynamiquement les modèles
+    // Filtrer dynamiquement les modèles à partir des marques
     document.getElementById('idMarque').addEventListener('change', function() {
       const marque = this.value;
       document.querySelectorAll('#idModele option').forEach(opt => {

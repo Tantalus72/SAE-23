@@ -10,10 +10,8 @@ require_once 'functions/functions.php';
 try {
     $pdo = getPDO();
 
-    // Construction des filtres dynamiques
-
-    $clauses = []; // Nos 'WHERE'
-    $params  = []; // Paramètres à injecter dans la requête préparée
+    $clauses = []; // Nos condition du 'WHERE' dans la requete sql
+    $params  = []; // param à mettre dans la requête préparée
 
     // Si chaque filtre est défini et non vide, on l'ajoute
     if (!empty($_POST['idMarque'])) {
@@ -50,7 +48,7 @@ try {
     }
 
 
-    // Requête SQL principale
+    // requete sql
     $sql = "
         SELECT 
             a.*, 
@@ -61,29 +59,28 @@ try {
         LEFT JOIN modeles mo ON a.idModele  = mo.idModele
     ";
 
-    // Si on a des conditions, on les ajoute à la requête
+    // si on a des conditions on les ajoute à la requête sql
     if ($clauses) {
         $sql .= ' WHERE ' . implode(' AND ', $clauses); // implode sert à rassembler les éléments d'un tableau en une chaine de caractères
     }
 
-    // tri par date (annonce la plus récente en premier)
-    $sql .= ' ORDER BY a.idAnnonce DESC'; // .= est une syntaxe qui permet de concaténer avec une chaine  (comme le += par exemple)
+    // tri par date 
+    $sql .= ' ORDER BY a.idAnnonce DESC'; 
 
-
-    // Exécution de la requête
+    // execution de la requête
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
     $annonces = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     
-    // Réponse JSON en cas de succès
+    // réponse d'un JSON en cas de succès
     echo json_encode([
         'success' => true,
         'data'    => $annonces
     ]);
 
 } catch (Exception $e) {
-    // En cas d'erreur on retourne l'erreur dans le JSON
+    // si erreur on retourne l'erreur dans le JSON
     echo json_encode([
         'success' => false,
         'error'   => $e->getMessage()

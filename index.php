@@ -161,23 +161,22 @@ list($prixMin, $prixMax) = $pdo
     
     <script>
 
-    // Timer global pour le debounce
     let timer;
 
-    // Dès que l'utilisateur tape un caractère, on annule le timer précédent et on relance après 500ms
+    // si l'utilisateur modifie un caractère on annule le timer précédent et on relance après 500ms
     function debounceApplyFilters() {
         clearTimeout(timer);
-        timer = setTimeout(applyFilters, 500);  
+        timer = setTimeout(applyFilters, 500);  // pour eviter d'envoyer trop de requete
     }
 
     // Filtrage dynamique des modèles en fonction de la marque
-    document.addEventListener('change', function(e) {
+    document.addEventListener('change', function(e) { //s'il y a un changement dans le formulaire
         if (e.target.id === 'filterMarque') {
             const marque = e.target.value;
 
             // On affiche uniquement les modèles qui appartiennent à la marque sélectionnée
             document.querySelectorAll('#filterModele option').forEach(opt => {
-                opt.style.display = (!marque || opt.dataset.marque === marque || opt.value === '') ? 'block' : 'none';
+                opt.style.display = (!marque || opt.dataset.marque === marque || opt.value === '') ? 'block' : 'none'; // display: block ou display: none en css
             });
 
             // On réinitialise la sélection du modèle
@@ -206,18 +205,18 @@ list($prixMin, $prixMax) = $pdo
             if (el && el.value) data.append(map[id], el.value);
         }
 
-        // Création de la requête AJAX
+        // =============================== requête AJAX ==========================================
         const xhr = new XMLHttpRequest();
         xhr.open('POST', 'filter_annonces_ajax.php', true);
 
         xhr.onload = function() {
             if (xhr.status === 200) {
-                const resp = JSON.parse(xhr.responseText);
+                const resp = JSON.parse(xhr.responseText); // json => dico
                 if (resp.success) {
                     const container = document.getElementById('annonces-container');
-                    container.innerHTML = ''; // On vide le contenu actuel
+                    container.innerHTML = ''; // on reset le contenu
 
-                    // Si aucune annonce ne correspond
+                    // si aucune annonce ne correspond
                     if (resp.data.length === 0) {
                         container.innerHTML = `
                             <div class="col-12 mt-4">
@@ -227,7 +226,7 @@ list($prixMin, $prixMax) = $pdo
 
                         console.log(resp.data)
                         // On génère les cards 
-                        resp.data.forEach(a => {
+                        resp.data.forEach(a => { //pour chaque element de la reponse qui est un json on fait : 
                             console.log(a)
                             const d = document.createElement('div');
                             d.className = 'col-md-4 mb-4';
@@ -269,7 +268,7 @@ list($prixMin, $prixMax) = $pdo
             }
         };
 
-        xhr.send(data); // Envoie de la requête
+        xhr.send(data); 
     }
 
 

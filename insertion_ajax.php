@@ -27,7 +27,7 @@ try {
 
     // Vérification des champs obligatoires
     if (!$idMarque || !$idModele || !$designation || !$annee || !$kilometrage || !$prix) {
-        throw new Exception("Tous les champs sont obligatoires.");
+        throw new Exception("Tous les champs sont obligatoires."); //on cree l'erreur si il manque des champs
     }
 
     // Répertoire cible pour l'image
