@@ -161,119 +161,119 @@ list($prixMin, $prixMax) = $pdo
     
     <script>
 
-    let timer;
+        let timer;
 
-    // si l'utilisateur modifie un caractère on annule le timer précédent et on relance après 500ms
-    function debounceApplyFilters() {
-        clearTimeout(timer);
-        timer = setTimeout(applyFilters, 500);  // pour eviter d'envoyer trop de requete
-    }
-
-    // Filtrage dynamique des modèles en fonction de la marque
-    document.addEventListener('change', function(e) { //s'il y a un changement dans le formulaire
-        if (e.target.id === 'filterMarque') {
-            const marque = e.target.value;
-
-            // On affiche uniquement les modèles qui appartiennent à la marque sélectionnée
-            document.querySelectorAll('#filterModele option').forEach(opt => {
-                opt.style.display = (!marque || opt.dataset.marque === marque || opt.value === '') ? 'block' : 'none'; // display: block ou display: none en css
-            });
-
-            // On réinitialise la sélection du modèle
-            document.getElementById('filterModele').value = '';
-        }
-    });
-
-
-    // envoie les filtres au serveur et met à jour les cartes
-    function applyFilters() {
-        const data = new FormData();
-
-        // Correspondance entre les IDs des filtres HTML et les noms de champs côté PHP
-        const map = {
-            filterMarque: 'idMarque',
-            filterModele: 'idModele',
-            filterAnneeMin: 'anneeMin',
-            filterAnneeMax: 'anneeMax',
-            filterKmMax: 'kmMax',
-            filterPrixMax: 'prixMax'
-        };
-
-        // On ajoute uniquement les champs qui sont remplis au 'FormData'
-        for (let id in map) {
-            const el = document.getElementById(id);
-            if (el && el.value) data.append(map[id], el.value);
+        // si l'utilisateur modifie un caractère on annule le timer précédent et on relance après 500ms
+        function debounceApplyFilters() {
+            clearTimeout(timer);
+            timer = setTimeout(applyFilters, 500);  // pour eviter d'envoyer trop de requete
         }
 
-        // =============================== requête AJAX ==========================================
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'filter_annonces_ajax.php', true);
+        // Filtrage dynamique des modèles en fonction de la marque
+        document.addEventListener('change', function(e) { //s'il y a un changement dans le formulaire
+            if (e.target.id === 'filterMarque') {
+                const marque = e.target.value;
 
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const resp = JSON.parse(xhr.responseText); // json => dico
-                if (resp.success) {
-                    const container = document.getElementById('annonces-container');
-                    container.innerHTML = ''; // on reset le contenu
+                // On affiche uniquement les modèles qui appartiennent à la marque sélectionnée
+                document.querySelectorAll('#filterModele option').forEach(opt => {
+                    opt.style.display = (!marque || opt.dataset.marque === marque || opt.value === '') ? 'block' : 'none'; // display: block ou display: none en css
+                });
 
-                    // si aucune annonce ne correspond
-                    if (resp.data.length === 0) {
-                        container.innerHTML = `
-                            <div class="col-12 mt-4">
-                                <p class="text-center">Aucune annonce disponible avec ces filtres de recherche.</p>
-                            </div>`;
-                    } else {
+                // On réinitialise la sélection du modèle
+                document.getElementById('filterModele').value = '';
+            }
+        });
 
-                        console.log(resp.data)
-                        // On génère les cards 
-                        resp.data.forEach(a => { //pour chaque element de la reponse qui est un json on fait : 
-                            console.log(a)
-                            const d = document.createElement('div');
-                            d.className = 'col-md-4 mb-4';
-                            d.innerHTML = `
-                                <div class="card h-100 shadow">
-                                    <img src="ressources/image/annonces/${a.path_img}" class="card-img-top" alt="Voiture d'occasion" style="height: 200px; object-fit: cover;">
-                                    
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-start mb-3">
-                                            <div>
-                                                <h5 class="card-title mb-1">${a.nom_marque}</h5>
-                                                <h6 class="card-subtitle text-muted">${a.nom_modele}</h6>
-                                            </div>
-                                            <span class="badge bg-dark">${a.annee}</span>
-                                        </div>
 
-                                        <p class="card-text">${a.designation}</p>
+        // envoie les filtres au serveur et met à jour les cartes
+        function applyFilters() {
+            const data = new FormData();
 
-                                        <div class="d-flex justify-content-between align-items-center mt-auto">
-                                            <div>
-                                                <span class="text-muted d-block small">Kilométrage</span>
-                                                <span class="fw-bold">${Number(a.kilometrage).toLocaleString('fr-FR')} km</span>
-                                            </div>
-                                            <div class="text-end">
-                                                <span class="text-primary fs-4 fw-bold">${Number(a.prix).toLocaleString('fr-FR')} €</span>
-                                            
-                                            <?php if (isAdmin($_SESSION['email']))  { ?>
-                                                 <a href="modification.php?idVoiture=${a.idAnnonce}" class="btn btn-primary btn-sm d-block mt-1">Modifier</a>
-                                                
-                                            <?php }; ?>
-                                            </div>                                            
-                                        </div>
-                                    </div>
+            // Correspondance entre les IDs des filtres HTML et les noms de champs côté PHP
+            const map = {
+                filterMarque: 'idMarque',
+                filterModele: 'idModele',
+                filterAnneeMin: 'anneeMin',
+                filterAnneeMax: 'anneeMax',
+                filterKmMax: 'kmMax',
+                filterPrixMax: 'prixMax'
+            };
+
+            // On ajoute uniquement les champs qui sont remplis au 'FormData'
+            for (let id in map) {
+                const el = document.getElementById(id);
+                if (el && el.value) data.append(map[id], el.value);
+            }
+
+            // =============================== requête AJAX ==========================================
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'filter_annonces_ajax.php', true);
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const resp = JSON.parse(xhr.responseText); // json => dico
+                    if (resp.success) {
+                        const container = document.getElementById('annonces-container');
+                        container.innerHTML = ''; // on reset le contenu
+
+                        // si aucune annonce ne correspond
+                        if (resp.data.length === 0) {
+                            container.innerHTML = `
+                                <div class="col-12 mt-4">
+                                    <p class="text-center">Aucune annonce disponible avec ces filtres de recherche.</p>
                                 </div>`;
-                            container.appendChild(d);
-                        });
+                        } else {
+
+                            console.log(resp.data)
+                            // On génère les cards 
+                            resp.data.forEach(a => { //pour chaque element de la reponse qui est un json on fait : 
+                                console.log(a)
+                                const d = document.createElement('div');
+                                d.className = 'col-md-4 mb-4';
+                                d.innerHTML = `
+                                    <div class="card h-100 shadow">
+                                        <img src="ressources/image/annonces/${a.path_img}" class="card-img-top" alt="Voiture d'occasion" style="height: 200px; object-fit: cover;">
+                                        
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                                <div>
+                                                    <h5 class="card-title mb-1">${a.nom_marque}</h5>
+                                                    <h6 class="card-subtitle text-muted">${a.nom_modele}</h6>
+                                                </div>
+                                                <span class="badge bg-dark">${a.annee}</span>
+                                            </div>
+
+                                            <p class="card-text">${a.designation}</p>
+
+                                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                                <div>
+                                                    <span class="text-muted d-block small">Kilométrage</span>
+                                                    <span class="fw-bold">${Number(a.kilometrage).toLocaleString('fr-FR')} km</span>
+                                                </div>
+                                                <div class="text-end">
+                                                    <span class="text-primary fs-4 fw-bold">${Number(a.prix).toLocaleString('fr-FR')} €</span>
+                                                
+                                                <?php if (isAdmin($_SESSION['email']))  { ?>
+                                                    <a href="modification.php?idVoiture=${a.idAnnonce}" class="btn btn-primary btn-sm d-block mt-1">Modifier</a>
+                                                    
+                                                <?php }; ?>
+                                                </div>                                            
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                container.appendChild(d);
+                            });
+                        }
                     }
                 }
-            }
-        };
+            };
 
-        xhr.send(data); 
-    }
+            xhr.send(data); 
+        }
 
 
-    // On lance la fonction au chargement de la page
-    document.addEventListener('DOMContentLoaded', applyFilters);
+        // On lance la fonction au chargement de la page
+        document.addEventListener('DOMContentLoaded', applyFilters);
     </script>
 
 

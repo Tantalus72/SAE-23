@@ -1,8 +1,4 @@
 <?php
-// =======================
-// AJAX - Récupère les annonces filtrées
-// =======================
-
 session_start();
 header('Content-Type: application/json; charset=UTF-8');
 require_once 'functions/functions.php';

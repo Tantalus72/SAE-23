@@ -1,5 +1,5 @@
-<!-- FONCTION DE LOGIN -->
 <?php
+// FONCTION DE LOGIN 
 function login($email, $password) {
     $retour = false;
     
@@ -44,7 +44,7 @@ function listerAnnonces()	{
 
     try {
 
-        $pdo = new PDO("sqlite:bdd/db.sqlite");
+        $pdo = getPDO(); // On récupère l'objet PDO
         
         // On écrit la requête pour récupérer toutes les annonces
         $sql = "SELECT 
@@ -73,7 +73,7 @@ function getVoiture($id) {
     $retour = false ;
     try {
 
-        $pdo = new PDO("sqlite:bdd/db.sqlite");
+        $pdo = getPDO();
         $sql = $pdo->prepare("SELECT * FROM annonces WHERE idAnnonce = ?");
         $sql->execute([$id]);
         $voiture = $sql->fetch(PDO::FETCH_ASSOC);
@@ -91,7 +91,7 @@ function getVoiture($id) {
 // Fonction de suppression d'une annonce
 function delete_annonce($id) {
     try {
-        $pdo = new PDO("sqlite:bdd/db.sqlite");
+        $pdo = getPDO();;
 
         // Récupérer le chemin de l'image
         $stmtImg = $pdo->prepare("SELECT path_img FROM annonces WHERE idAnnonce = ?");
