@@ -3,7 +3,7 @@
 function login($email, $password) {
     $retour = false;
     
-    $madb = getPDO(); // On récupère l'objet PDO
+    $madb = new PDO('sqlite:bdd/comptes.sqlite'); // On récupère l'objet PDO
     
     // Requête préparée
     $requete = "SELECT EMAIL, PASS FROM utilisateurs WHERE EMAIL = ? AND PASS = ?";
@@ -22,7 +22,7 @@ function login($email, $password) {
 function isAdmin($mail){
     $retour = false ;
     
-    $madb = getPDO(); // On récupère l'objet PDO
+    $madb = new PDO('sqlite:bdd/comptes.sqlite'); // On récupère l'objet PDO
 
     $requete = "SELECT STATUT FROM utilisateurs WHERE EMAIL = ?" ;
     $stmt = $madb->prepare($requete);
@@ -44,7 +44,7 @@ function listerAnnonces()	{
 
     try {
 
-        $pdo = getPDO();
+        $pdo = new PDO("sqlite:bdd/db.sqlite");
         
         // On écrit la requête pour récupérer toutes les annonces
         $sql = "SELECT 
@@ -73,7 +73,7 @@ function getVoiture($id) {
     $retour = false ;
     try {
 
-        $pdo = getPDO();
+        $pdo = new PDO("sqlite:bdd/db.sqlite");
         $sql = $pdo->prepare("SELECT * FROM annonces WHERE idAnnonce = ?");
         $sql->execute([$id]);
         $voiture = $sql->fetch(PDO::FETCH_ASSOC);
@@ -91,7 +91,7 @@ function getVoiture($id) {
 // Fonction de suppression d'une annonce
 function delete_annonce($id) {
     try {
-        $pdo = getPDO();
+        $pdo = new PDO("sqlite:bdd/db.sqlite");
 
         // Récupérer le chemin de l'image
         $stmtImg = $pdo->prepare("SELECT path_img FROM annonces WHERE idAnnonce = ?");
