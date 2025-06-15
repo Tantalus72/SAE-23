@@ -6,7 +6,7 @@ $error = '';
 $success = '';
 
 // Connexion à la base de données
-$pdo = new PDO('sqlite:bdd/db.sqlite');
+$pdo = getPDO();
 
 // Récupération des marques et modèles
 $marques = $pdo->query("SELECT * FROM marques")->fetchAll(PDO::FETCH_ASSOC);

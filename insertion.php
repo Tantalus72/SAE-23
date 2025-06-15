@@ -4,8 +4,8 @@ require_once 'functions/functions.php';
 
 
 // Connexion et sélection des marques / modèles
-$dbFile = __DIR__ . '/bdd/db.sqlite';
-$pdo = new PDO('sqlite:' . $dbFile);
+
+$pdo = getPDO();
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $marques  = $pdo->query("SELECT * FROM marques")->fetchAll(PDO::FETCH_ASSOC);
