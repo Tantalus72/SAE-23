@@ -42,7 +42,7 @@ if (empty($_SESSION)) {
 } elseif (!isAdmin($_SESSION['email'] ?? '')) {
     include 'partial/admin_access.php';
     include 'partial/footer.php';
-    redirect('connexion.php', 10);
+    redirect('index.php', 10);
     exit();
 } else {
 ?>
