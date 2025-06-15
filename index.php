@@ -79,7 +79,7 @@ list($prixMin, $prixMax) = $pdo
 
 
 
-    <main class="table py-5">
+    <main class="container py-5">
         <h2 id="annonce" class="text-center mb-5">Nos dernières annonces</h2>
 
         <!-- FILTRES  -->
