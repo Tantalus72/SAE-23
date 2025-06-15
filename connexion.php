@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $error = 'Identifiants incorrects';
             $fichier = fopen('./logs/access.log','a+');
-            fputs($fichier,$_POST['email']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS\of F Y h:i:s A')." ne s'est connecté pas");
+            fputs($fichier,$_POST['email']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS\of F Y h:i:s A')." ne s'est pas connecter");
             fputs($fichier,"\n");
             fclose($fichier);
         }
