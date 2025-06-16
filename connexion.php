@@ -13,20 +13,31 @@ $error = ''; // On définir une variable en cas d'erreur
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['email']) && !empty($_POST['password'])) {
         if(login($_POST['email'], $_POST['password'])) {
+            
+            // On créer la session
             $_SESSION['email'] = $_POST['email'];
-            $status = "user";
-            if (isAdmin($_SESSION["email"])){$status="admin";}
-            $fichier = fopen('./logs/access.log','a+');
-            fputs($fichier,$_POST['email']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS\of F Y h:i:s A')." sous le status :".$status." s'est connecté");
+            $status = "user"; // Statut par défaut
+
+            // Si l'utilisateur est admin, on change le statut
+            if (isAdmin($_SESSION["email"])){
+                $status="admin";
+            } 
+
+            // Gestion des logs
+            $fichier = fopen('./logs/access.log','a+'); // fichier de logs
+
+            // On écrit dans le fichier de logs
+            fputs($fichier,$_POST['email']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS\of F Y h:i:s A')." sous le status :".$status." s'est connecté en");
             fputs($fichier,"\n");
             fclose($fichier);
             
+            // On redirige vers la page d'accueil
             header('Location: index.php');
             exit();
-        } else {
+        } else { // en cas d'erreur de connexion
             $error = 'Identifiants incorrects';
             $fichier = fopen('./logs/access.log','a+');
-            fputs($fichier,$_POST['email']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS\of F Y h:i:s A')." ne s'est pas connecter");
+            fputs($fichier,$_POST['email']." de ".$_SERVER['REMOTE_ADDR']." à ".date('l jS\of F Y h:i:s A')." ne s'est pas connecté");
             fputs($fichier,"\n");
             fclose($fichier);
         }
