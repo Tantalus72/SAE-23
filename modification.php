@@ -341,6 +341,7 @@ $annonces = listerAnnonces();
 
             // On scroll vers le haut pour que l'utilisateur voit bien le message
             window.scrollTo(0, 0);
+            generateCaptcha();
 
         });
           document.getElementById('idMarque').addEventListener('change', function() {
